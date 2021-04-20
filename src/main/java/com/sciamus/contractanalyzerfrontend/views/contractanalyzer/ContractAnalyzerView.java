@@ -1,7 +1,6 @@
 package com.sciamus.contractanalyzerfrontend.views.contractanalyzer;
 
 import com.sciamus.contractanalyzerfrontend.control.GetChecksClient;
-import com.sciamus.contractanalyzerfrontend.control.GetReportsClient;
 import com.sciamus.contractanalyzerfrontend.control.RunCheckClient;
 import com.sciamus.contractanalyzerfrontend.views.main.MainView;
 import com.vaadin.flow.component.Text;
@@ -9,7 +8,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.listbox.ListBox;
-import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -38,33 +37,33 @@ public class ContractAnalyzerView extends Div {
 
         addClassName("contract-analyzer-view");
 
-        add(new Text("List of checks to run:"));
-
-        ListBox<String> listBox = new ListBox<>();
+        ListBox<String> listOfChecksToRun = new ListBox<>();
 
         List<String> listOfAvailableChecks = client.getListOfChecks().listOfChecks;
 
-        listBox.setItems(listOfAvailableChecks.stream());
+        listOfChecksToRun.setItems(listOfAvailableChecks.stream());
 
-        listBox.setValue(listOfAvailableChecks.get(0));
+        listOfChecksToRun.setValue(listOfAvailableChecks.get(0));
 
-
-        listBox.addValueChangeListener(event -> Notification.show("Check chosen: " + event.getValue()));
-
-        Button runButton = new Button("Run check");
+//        listOfChecksToRun.addValueChangeListener(event -> Notification.show("Check chosen: " + event.getValue()));
 
         TextField urlField = new TextField();
         urlField.setLabel("Please enter URL: ");
         urlField.setHelperText("This points to the server on which the test will be run");
-
-
+        urlField.setWidth("500px");
         urlField.setClearButtonVisible(true);
         urlField.setValue("http://localhost:8080");
 
-        runButton.addClickListener(event -> runCheckClient.runCheck(listBox.getValue(), urlField.getValue()));
+
+        Button runButton = new Button("Run check");
+        runButton.setWidth("150px");
+        runButton.addClickListener(event -> runCheckClient.runCheck(listOfChecksToRun.getValue(), urlField.getValue()));
 
 
-        add(listBox, runButton, urlField);
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.add(new Text("List of checks to run:"), listOfChecksToRun, urlField, runButton);
+
+        add(verticalLayout);
 
     }
 }

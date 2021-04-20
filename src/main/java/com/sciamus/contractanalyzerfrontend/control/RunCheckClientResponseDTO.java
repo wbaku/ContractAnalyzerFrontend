@@ -5,35 +5,16 @@ import java.util.Date;
 public class RunCheckClientResponseDTO {
 
     //    @JsonProperty("id")
-    private String id="dupa";
+    public String id;
     //    @JsonProperty("result")
-    private String result;
+    public String result;
     //    @JsonProperty ("name")
-    private String nameOfCheck;
+    public String nameOfCheck;
     //    @JsonProperty("reportBody")
-    private String reportBody;
+    public String reportBody;
     //    @JsonProperty("timestamp")
-    private Date timestamp;
+    public Date timestamp;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public void setNameOfCheck(String nameOfCheck) {
-        this.nameOfCheck = nameOfCheck;
-    }
-
-    public void setReportBody(String reportBody) {
-        this.reportBody = reportBody;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
 
     public String getId() {
         return id;

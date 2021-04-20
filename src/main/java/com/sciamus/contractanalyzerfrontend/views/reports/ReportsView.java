@@ -30,6 +30,12 @@ public class ReportsView extends Div {
 
         grid.setItems(getReportsClient.getAllReports().stream());
 
+//        grid.getColumnByKey("id").setFlexGrow(0).setWidth("60px");
+//        grid.getColumnByKey("reportBody").setResizable(true).setFlexGrow(0).setAutoWidth(false);
+
+        grid.getColumns().forEach(column -> column.setAutoWidth(true));
+        grid.setHeightByRows(true);
+
         add(grid);
 
 
