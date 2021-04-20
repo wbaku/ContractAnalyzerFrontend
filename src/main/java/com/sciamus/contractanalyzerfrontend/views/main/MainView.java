@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.sciamus.contractanalyzerfrontend.views.about.AboutView;
 import com.sciamus.contractanalyzerfrontend.views.contractanalyzer.ContractAnalyzerView;
+import com.sciamus.contractanalyzerfrontend.views.reports.ReportsView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -65,6 +66,8 @@ public class MainView extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+
+        //TODO: sciamus logo
         logoLayout.add(new Image("images/logo.png", "ContractAnalyzer logo"));
         logoLayout.add(new H1("ConAnalyzer"));
         layout.add(logoLayout, menu);
@@ -81,7 +84,7 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{createTab("ContractAnalyzer", ContractAnalyzerView.class),
+        return new Tab[]{createTab("ContractAnalyzer", ContractAnalyzerView.class),createTab("Reporting", ReportsView.class),
                 createTab("About", AboutView.class)};
     }
 
