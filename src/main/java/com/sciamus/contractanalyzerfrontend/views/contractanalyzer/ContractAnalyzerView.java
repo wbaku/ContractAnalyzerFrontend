@@ -40,7 +40,30 @@ public class ContractAnalyzerView extends Div {
 
         Label presentationText = new Label("List of checks to run:");
 
+        ListBox<String> listOfChecksToRun = getListBox(client);
+//        listOfChecksToRun.addValueChangeListener(event -> Notification.show("Check chosen: " + event.getValue()));
+        TextField urlField = getTextField();
+        Button runButton = getButton(runCheckClient, listOfChecksToRun, urlField);
+        VerticalLayout verticalLayout = getVerticalLayout(presentationText, listOfChecksToRun, urlField, runButton);
+//        verticalLayout.setPadding(true);
 
+        add(verticalLayout);
+    }
+
+    private VerticalLayout getVerticalLayout(Label presentationText, ListBox<String> listOfChecksToRun, TextField urlField, Button runButton) {
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.add(presentationText, listOfChecksToRun, urlField, runButton);
+        return verticalLayout;
+    }
+
+    private Button getButton(RunCheckClient runCheckClient, ListBox<String> listOfChecksToRun, TextField urlField) {
+        Button runButton = new Button("Run check");
+        runButton.setWidth("150px");
+        runButton.addClickListener(event -> runCheckClient.runCheck(listOfChecksToRun.getValue(), urlField.getValue()));
+        return runButton;
+    }
+
+    private ListBox<String> getListBox(GetChecksClient client) {
         ListBox<String> listOfChecksToRun = new ListBox<>();
 
         List<String> listOfAvailableChecks = client.getListOfChecks().listOfChecks;
@@ -48,9 +71,10 @@ public class ContractAnalyzerView extends Div {
         listOfChecksToRun.setItems(listOfAvailableChecks.stream());
 
         listOfChecksToRun.setValue(listOfAvailableChecks.get(0));
+        return listOfChecksToRun;
+    }
 
-//        listOfChecksToRun.addValueChangeListener(event -> Notification.show("Check chosen: " + event.getValue()));
-
+    private TextField getTextField() {
         TextField urlField = new TextField();
         urlField.setLabel("Please enter URL: ");
         urlField.setHelperText("This points to the server on which the test will be run");
@@ -58,17 +82,6 @@ public class ContractAnalyzerView extends Div {
         urlField.setClearButtonVisible(true);
         urlField.setAutoselect(true);
         urlField.setValue("http://localhost:8080");
-
-
-        Button runButton = new Button("Run check");
-        runButton.setWidth("150px");
-        runButton.addClickListener(event -> runCheckClient.runCheck(listOfChecksToRun.getValue(), urlField.getValue()));
-
-
-        VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.add(presentationText,listOfChecksToRun, urlField, runButton);
-//        verticalLayout.setPadding(true);
-
-        add(verticalLayout);
+        return urlField;
     }
 }

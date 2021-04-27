@@ -22,16 +22,20 @@ public class ReportsView extends Div {
         this.getReportsClient = getReportsClient;
         addClassName("reports-view");
 
+        Grid<RunCheckClientResponseDTO> grid = getGrid(getReportsClient);
 
+        add(grid);
+
+    }
+
+    private Grid<RunCheckClientResponseDTO> getGrid(GetReportsClient getReportsClient) {
         Grid<RunCheckClientResponseDTO> grid = new Grid<>(RunCheckClientResponseDTO.class);
 
         grid.setItems(getReportsClient.getAllReports().stream());
 
         grid.getColumns().forEach(column -> column.setAutoWidth(true));
         grid.setHeightByRows(true);
-
-        add(grid);
-
+        return grid;
     }
 
 }
