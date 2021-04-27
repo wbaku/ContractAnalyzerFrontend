@@ -1,9 +1,7 @@
 package com.sciamus.contractanalyzerfrontend.views.contractanalyzer;
 
-import com.sciamus.contractanalyzerfrontend.control.GetChecksClient;
-import com.sciamus.contractanalyzerfrontend.control.RunCheckClient;
+import com.sciamus.contractanalyzerfrontend.control.checks.ChecksClient;
 import com.sciamus.contractanalyzerfrontend.views.main.MainView;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
@@ -26,24 +24,22 @@ import java.util.List;
 
 public class ContractAnalyzerView extends Div {
 
-    private final RunCheckClient runCheckClient;
-    private final GetChecksClient getChecksClient;
+    private final ChecksClient checksClient;
 
 
     @Autowired
-    public ContractAnalyzerView(GetChecksClient client, RunCheckClient runCheckClient) {
-        this.getChecksClient = client;
-        this.runCheckClient = runCheckClient;
+    public ContractAnalyzerView(ChecksClient checksClient) {
+        this.checksClient = checksClient;
 
         addClassName("contract-analyzer-view");
 
 
         Label presentationText = new Label("List of checks to run:");
 
-        ListBox<String> listOfChecksToRun = getListBox(client);
+        ListBox<String> listOfChecksToRun = getListBox(checksClient);
 //        listOfChecksToRun.addValueChangeListener(event -> Notification.show("Check chosen: " + event.getValue()));
         TextField urlField = getTextField();
-        Button runButton = getButton(runCheckClient, listOfChecksToRun, urlField);
+        Button runButton = getButton(checksClient, listOfChecksToRun, urlField);
         VerticalLayout verticalLayout = getVerticalLayout(presentationText, listOfChecksToRun, urlField, runButton);
 //        verticalLayout.setPadding(true);
 
@@ -56,14 +52,14 @@ public class ContractAnalyzerView extends Div {
         return verticalLayout;
     }
 
-    private Button getButton(RunCheckClient runCheckClient, ListBox<String> listOfChecksToRun, TextField urlField) {
+    private Button getButton(ChecksClient checksClient, ListBox<String> listOfChecksToRun, TextField urlField) {
         Button runButton = new Button("Run check");
         runButton.setWidth("150px");
-        runButton.addClickListener(event -> runCheckClient.runCheck(listOfChecksToRun.getValue(), urlField.getValue()));
+        runButton.addClickListener(event -> checksClient.runCheck(listOfChecksToRun.getValue(), urlField.getValue()));
         return runButton;
     }
 
-    private ListBox<String> getListBox(GetChecksClient client) {
+    private ListBox<String> getListBox(ChecksClient client) {
         ListBox<String> listOfChecksToRun = new ListBox<>();
 
         List<String> listOfAvailableChecks = client.getListOfChecks().listOfChecks;

@@ -1,10 +1,10 @@
-package com.sciamus.contractanalyzerfrontend.control;
+package com.sciamus.contractanalyzerfrontend.control.checks;
 
 //import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-public class RunCheckClientResponseDTO {
+public class CheckReportDTO {
 
     //        @JsonProperty("id")
     public String id;
@@ -40,12 +40,10 @@ public class RunCheckClientResponseDTO {
 
     @Override
     public String toString() {
-        return "RunCheckClientResponseDTO{" +
-                "id='" + id + '\'' +
+        return "// " +"id='" + id + '\'' +
                 ", result='" + result + '\'' +
                 ", name='" + nameOfCheck + '\'' +
-                ", reportBody='" + reportBody + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
+                ", content='" + reportBody + '\'' +
+                ", timestamp=" + timestamp;
     }
 }

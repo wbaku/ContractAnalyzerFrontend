@@ -1,7 +1,7 @@
 package com.sciamus.contractanalyzerfrontend.views.reports;
 
-import com.sciamus.contractanalyzerfrontend.control.GetReportsClient;
-import com.sciamus.contractanalyzerfrontend.control.RunCheckClientResponseDTO;
+import com.sciamus.contractanalyzerfrontend.control.checks.CheckReportDTO;
+import com.sciamus.contractanalyzerfrontend.control.checks.ChecksClient;
 import com.sciamus.contractanalyzerfrontend.views.main.MainView;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
@@ -15,24 +15,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CssImport("./views/about/about-view.css")
 public class ReportsView extends Div {
 
-    GetReportsClient getReportsClient;
+    ChecksClient checksClient;
 
     @Autowired
-    public ReportsView(GetReportsClient getReportsClient) {
-        this.getReportsClient = getReportsClient;
+    public ReportsView(ChecksClient checksClient) {
+        this.checksClient = checksClient;
         addClassName("reports-view");
 
-        Grid<RunCheckClientResponseDTO> grid = getGrid(getReportsClient);
-
+        Grid<CheckReportDTO> grid = getGrid(checksClient);
         add(grid);
-
     }
 
-    private Grid<RunCheckClientResponseDTO> getGrid(GetReportsClient getReportsClient) {
-        Grid<RunCheckClientResponseDTO> grid = new Grid<>(RunCheckClientResponseDTO.class);
+    private Grid<CheckReportDTO> getGrid(ChecksClient checksClient) {
+        Grid<CheckReportDTO> grid = new Grid<>(CheckReportDTO.class);
 
-        grid.setItems(getReportsClient.getAllReports().stream());
-
+        grid.setItems(checksClient.getAllReports());
         grid.getColumns().forEach(column -> column.setAutoWidth(true));
         grid.setHeightByRows(true);
         return grid;

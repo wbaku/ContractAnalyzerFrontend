@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.sciamus.contractanalyzerfrontend.views.about.AboutView;
 import com.sciamus.contractanalyzerfrontend.views.contractanalyzer.ContractAnalyzerView;
 import com.sciamus.contractanalyzerfrontend.views.reports.ReportsView;
+import com.sciamus.contractanalyzerfrontend.views.suites.SuiteReportsView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -84,7 +85,7 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{createTab("ContractAnalyzer", ContractAnalyzerView.class),createTab("Reporting", ReportsView.class),
+        return new Tab[]{createTab("ContractAnalyzer", ContractAnalyzerView.class),createTab("Suites", SuiteReportsView.class),createTab("Reporting", ReportsView.class),
                 createTab("About", AboutView.class)};
     }
 
@@ -94,19 +95,16 @@ public class MainView extends AppLayout {
         ComponentUtil.setData(tab, Class.class, navigationTarget);
         return tab;
     }
-
     @Override
     protected void afterNavigation() {
         super.afterNavigation();
         getTabForComponent(getContent()).ifPresent(menu::setSelectedTab);
         viewTitle.setText(getCurrentPageTitle());
     }
-
     private Optional<Tab> getTabForComponent(Component component) {
         return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
                 .findFirst().map(Tab.class::cast);
     }
-
     private String getCurrentPageTitle() {
         PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
         return title == null ? "" : title.value();
