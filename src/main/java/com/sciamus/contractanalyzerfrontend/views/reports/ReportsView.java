@@ -2,13 +2,12 @@ package com.sciamus.contractanalyzerfrontend.views.reports;
 
 import com.sciamus.contractanalyzerfrontend.control.GetReportsClient;
 import com.sciamus.contractanalyzerfrontend.control.RunCheckClientResponseDTO;
-import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.PageTitle;
 import com.sciamus.contractanalyzerfrontend.views.main.MainView;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "reports", layout = MainView.class)
@@ -26,20 +25,12 @@ public class ReportsView extends Div {
 
         Grid<RunCheckClientResponseDTO> grid = new Grid<>(RunCheckClientResponseDTO.class);
 
-        System.out.println(getReportsClient.getAllReports());
-
         grid.setItems(getReportsClient.getAllReports().stream());
-
-//        grid.getColumnByKey("id").setFlexGrow(0).setWidth("60px");
-//        grid.getColumnByKey("reportBody").setResizable(true).setFlexGrow(0).setAutoWidth(false);
 
         grid.getColumns().forEach(column -> column.setAutoWidth(true));
         grid.setHeightByRows(true);
 
         add(grid);
-
-
-
 
     }
 

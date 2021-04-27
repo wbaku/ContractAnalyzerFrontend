@@ -1,18 +1,20 @@
 package com.sciamus.contractanalyzerfrontend.control;
 
+//import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class RunCheckClientResponseDTO {
 
-    //    @JsonProperty("id")
+//        @JsonProperty("id")
     public String id;
-    //    @JsonProperty("result")
+//        @JsonProperty("result")
     public String result;
-    //    @JsonProperty ("name")
+//        @JsonProperty ("name")
     public String nameOfCheck;
-    //    @JsonProperty("reportBody")
+//        @JsonProperty("reportBody")
     public String reportBody;
-    //    @JsonProperty("timestamp")
+//        @JsonProperty("timestamp")
     public Date timestamp;
 
 

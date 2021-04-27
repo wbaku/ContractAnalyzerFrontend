@@ -7,6 +7,7 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -25,7 +26,6 @@ import java.util.List;
 
 public class ContractAnalyzerView extends Div {
 
-    //    private final GetChecksClient client;
     private final RunCheckClient runCheckClient;
     private final GetChecksClient getChecksClient;
 
@@ -36,6 +36,10 @@ public class ContractAnalyzerView extends Div {
         this.runCheckClient = runCheckClient;
 
         addClassName("contract-analyzer-view");
+
+
+        Label presentationText = new Label("List of checks to run:");
+
 
         ListBox<String> listOfChecksToRun = new ListBox<>();
 
@@ -52,6 +56,7 @@ public class ContractAnalyzerView extends Div {
         urlField.setHelperText("This points to the server on which the test will be run");
         urlField.setWidth("500px");
         urlField.setClearButtonVisible(true);
+        urlField.setAutoselect(true);
         urlField.setValue("http://localhost:8080");
 
 
@@ -61,9 +66,9 @@ public class ContractAnalyzerView extends Div {
 
 
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.add(new Text("List of checks to run:"), listOfChecksToRun, urlField, runButton);
+        verticalLayout.add(presentationText,listOfChecksToRun, urlField, runButton);
+//        verticalLayout.setPadding(true);
 
         add(verticalLayout);
-
     }
 }
